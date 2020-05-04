@@ -84,16 +84,88 @@ foreach ($regions as $region => $cities) {
 Написать функцию транслитерации строк
 */
 
-$alphabet = [
-"а" => "a", "б" => "b", "в" => "v", "г" => "g",
-"д" => "d", "е" => "e", "ё" => "jo", "ж" => "zh",
-"з" => "z"и""и́""к"
-"л" => "м""н""о"
-"п" => "у" => "ф" => "х" =>
-"у""ф""х""у"
-"я""ш""щ""ь"
-"я""ъ""э""ю"
-"я"
+function translit($str) {
+  $alphabet = [
+    "а" => "a", "б" => "b", "в" => "v", "г" => "g",
+    "д" => "d", "е" => "e", "ё" => "jo", "ж" => "zh",
+    "з" => "z", "и" => "i", "и́" => "y", "к" => "k",
+    "л" => "l", "м" => "m", "н" => "n", "o" => "о",
+    "п" => "p", "р" => "r", "с" => "s", "т" => "t",
+    "у" => "u", "ф" => "f", "х" => "h", "ц" => "c",
+    "ч" => "ch", "ш" => "sh", "щ" => "jsh",
+    "ъ" => "hh", "ы" => "ih", "ь" => "jh",
+    "э" => "eh", "ю" => "ju", "я" => "ja"
+  ];
+  $letters = mb_str_split($str);
+  $translitStr = "";
+  foreach ($letters as $letter) {
+    if (array_key_exists($letter, $alphabet)) {
+      $translitStr .= $alphabet[$letter];
+    } elseif (array_key_exists(mb_strtolower($letter), $alphabet)) {
+      $translitStr .= mb_strtoupper($alphabet[mb_strtolower($letter)]);
+    } else {
+      $translitStr .= $letter;
+    }
+  }
+  return $translitStr;
+}
+
+echo translit("Привет!") . "\n";
+
+/*
+5. Написать функцию, которая заменяет в строке пробелы 
+на подчеркивания и возвращает видоизмененную строчку.
+*/
+
+function spaceReplace($str) {
+ $letters = mb_str_split($str);
+ $result = false;
+ foreach ($letters as $letter) {
+   $result .= $letter === " " ? "_" : $letter;
+ }
+ return $result;
+}
+
+echo spaceReplace("Всем привет!") . "\n";
 
 
-];
+
+/*
+7. *Вывести с помощью цикла for числа от 0 до 9, не 
+используя тело цикла. Выглядеть должно так:
+for (…){ // здесь пусто}
+*/
+
+for ($i = 0; $i < 10; print " " . $i++);
+
+echo "\n";
+
+
+/*
+8. *Повторить третье задание, но вывести на экран 
+только города, начинающиеся с буквы «К».
+*/
+
+foreach ($regions as $region => $cities) {
+  echo $region . ":\n";
+  $allcities = "";
+  foreach ($cities as $city) {
+    if (mb_substr($city, 0, 1) == "К") {
+      $allcities .= ($allcities == "" ? "" : ", ") . $city;
+    }
+  }
+  echo $allcities . "\n";
+}
+
+/*
+9. *Объединить две ранее написанные функции в одну, 
+которая получает строку на русском языке, производит 
+транслитерацию и замену пробелов на подчеркивания (аналогичная задача решается при конструировании url-адресов на основе названия статьи в блогах).
+*/
+
+function encodeURL($url) {
+  return spaceReplace(translit($url));
+}
+$url = "https://www.google.ru/тестовая ссылка";
+echo encodeURL($url);
+
