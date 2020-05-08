@@ -1,0 +1,39 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    padding: 40px;
+}
+
+ul.menu {
+    list-style: none;
+    display: inline-block;
+}
+
+li.menu__item {
+    display: inline-block;
+    background-color: rgb(48, 48, 48);
+    padding: 10px 15px;
+}
+
+li.menu__item:hover {
+    background-color: rgb(125, 125, 125);
+}
+
+li.menu__item a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.gallery__item {
+    padding: 10px;
+    display: inline-block;
+}
+
+.gallery__item img {
+    width: 125px;
+    max-width: 125px;
+    max-height: 94px;
+}
