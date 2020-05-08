@@ -110,7 +110,8 @@ echo '7. *Написать функцию, которая вычисляет т�
 date_default_timezone_set('Europe/Moscow');
 function getWordForm($val, $forms)
 {
-  $checkVal = $val > 19 ? $val % 10 : $val;
+  $checkVal = $val % 100;
+  $checkVal = $checkVal > 19 ? $checkVal % 10 : $checkVal;
   if ($checkVal >= 6 || $checkVal == 0) {
     return $forms[2];
   }
