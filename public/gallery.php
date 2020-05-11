@@ -1,8 +1,11 @@
 <?php
 
-require_once __DIR__ . '/../config/main.php'; 
+require_once __DIR__ . '/../config/main.php';
+require_once VENDOR_DIR . "funcImgResize.php";
 require_once ENGINE_DIR . 'render.php';
 require_once ENGINE_DIR . 'fs.php';
+require_once ENGINE_DIR . 'base.php';
+require_once ENGINE_DIR . 'db.php';
 
 $mainMenu = [
   'Home' => ['url' => '/'],
@@ -14,41 +17,33 @@ $acceptedImages =  ['jpg', 'jpeg', 'png'];
 $acceptedImagesFilter = "." . implode(", .", $acceptedImages);
 
 if ($_SERVER['REQUEST_METHOD'] === "POST" && count($_FILES) > 0) {
-  
-  $uploadedFiles = uploadImages(__DIR__ . "/img/", $_FILES['images']); 
-  createImagesPreviews($uploadedFiles, __DIR__ . "/img/preview/");
- 
+  $filesInfo = getFilesInfo($_FILES["images"]);
+  foreach ($filesInfo as $fileInfo) {
+    $resultFileName = basename($fileInfo['tmp_name']) . $fileInfo['ext'];
+    if (uploadImage($fileInfo['tmp_name'], IMAGES_DIR . $resultFileName)) {
+      img_resize(IMAGES_DIR . $resultFileName, IMAGES_PREVIEW_DIR . $resultFileName, 125, 94);
+    }
+
+    db_add_image(
+      str_replace(PUBLIC_DIR, "/", IMAGES_DIR . $resultFileName),
+      str_replace(PUBLIC_DIR, "/", IMAGES_PREVIEW_DIR . $resultFileName)
+    );
+    
+  } 
+  redirect("/gallery.php");
 }
 
-$galleryImages = getFilesFromDir("img", $acceptedImages); 
+//$galleryImages = getFilesFromDir(IMAGES_DIR, $acceptedImages);
+$galleryImages = db_get_images(); 
 
+include VIEWS_DIR . "header.php";
 ?>
 
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" media="all" href="/css/style.css">
-  <title><?= $title ?></title>
-</head>
-
-<body>
-  <div><?= $mainMenuHTML ?></div>
-  <div>
-    <h2><?= $form_title ?></h2>
-    <form action="" enctype="multipart/form-data" method="post">
-      <input type="file" name='images[]' multiple accept="<?= $acceptedImagesFilter ?>">
-      <input type="submit">
-    </form>
-  </div>
-  <div>
-    <?php foreach ($galleryImages as $image) : ?>
-      <a href='<?= $image['full_name'] ?>' target='_blank'><div class='gallery__item'><img src='<?= $image['dir'] . "preview/" . $image['name'] ?>'></div></a>
-    <?php endforeach; ?>
-  </div>
+<div><?= $mainMenuHTML ?></div>
 
 
-</body>
-
-</html>
+<?php
+include VIEWS_DIR . "gallery.php";
+include VIEWS_DIR . "upload_form.php";
+include VIEWS_DIR . "footer.php";
+?>

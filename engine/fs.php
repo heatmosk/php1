@@ -33,46 +33,24 @@ function getFilesInfo($files): array
     foreach ($fileInfoKeys as $fileInfoKey) {
       $fileInfo[$fileInfoKey] = $files[$fileInfoKey][$i];
     }
+    $fileInfo['ext'] = "." . pathinfo($fileInfo['name'])['extension'];
     $filesInfo[] = $fileInfo;
   }
   return $filesInfo;
 }
 
-function uploadImages($destDir, array $files = [])
-{
-  $filesInfo = getFilesInfo($files);
-  $acceptedMimeTypes = [
-    'image/gif', 'image/png', 'image/bmp', 'image/jpeg'
-  ];
-  foreach ($filesInfo as $file) {
-    $pathParts = pathinfo($file['name']);
-    $extension = $pathParts['extension'];
-    $fileName  = basename($file['tmp_name']) . "." . $extension;
-    $fileSize  = filesize($file['tmp_name']);
-    $resultFile = $destDir . $fileName;
-    if (
-      $fileSize > 0
-      && $fileSize <= 5242880
-      && in_array(
-        mime_content_type($file['tmp_name']),
-        $acceptedMimeTypes
-      )
-      && move_uploaded_file($file['tmp_name'], $resultFile)
-    ) {
-      $result[] = $resultFile;
-    } else {
-      return false;
-    }
-  }
-  return $result;
-}
-
-function createImagesPreviews($images, $destDir)
-{
-  if (count($images) > 0) {
-    require_once "funcImgResize.php";
-    foreach ($images as $image) {
-      img_resize($image, $destDir . basename($image), 125, 94);
-    }
+function uploadImage($sourceFile, $destFile): bool
+{ 
+  $acceptedMimeTypes = ['image/gif', 'image/png', 'image/bmp', 'image/jpeg'];
+  $fileName  = basename($sourceFile);
+  $fileSize  = filesize($sourceFile); 
+  if (
+    $fileSize > 0 && $fileSize <= 5242880
+    && in_array(mime_content_type($sourceFile), $acceptedMimeTypes)
+  ) {
+    return move_uploaded_file($sourceFile, $destFile);
+  } else {
+    return false;
   }
 }
+ 
