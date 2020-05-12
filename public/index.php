@@ -14,25 +14,15 @@ $mainMenu = [
   'Home' => ['url' => '/'],
   'Gallery' => ['url' => '/gallery.php']
 ];
-
 $mainMenuHTML = renderMenu($mainMenu);
 
+include VIEWS_DIR . "header.php";  
 ?>
 
-<html lang="en">
+<div><?= $mainMenuHTML ?></div>
+<div><?= $greeting . ', ' . $user ?></div>
+<div><?= $year ?></div>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" media="all" href="/css/style.css">
-  <title><?= $title ?></title>
-</head>
-
-<body>
-  <div><?= $mainMenuHTML ?></div>
-  <div><?= $greeting . ', ' . $user ?></div>
-
-  <div><?= $year ?></div>
-</body>
-
-</html>
+<?php
+include VIEWS_DIR . "footer.php";
+?>
