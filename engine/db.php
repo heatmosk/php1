@@ -1,44 +1,110 @@
 <?php
 
-$databaseLink = NULL;
+require_once "../config/main.php";
 
-function get_db_link()
+
+function dbConnect()
 {
-  global $databaseLink;
-  if ($databaseLink === NULL || mysqli_ping($databaseLink) === false) { 
-    $databaseLink = mysqli_connect("localhost", "php1user", "P@Svv0rd", "php1");
+  static $link;
+  if (!isset($link) || mysqli_ping($link) === false) {
+    $link = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_BASE);
+    mysqli_set_charset($link, "utf8");
   }
-  return $databaseLink;
+  return $link;
 }
 
-function db_add_image($filename, $preview): bool
+function dbAddImage($filename, $preview): bool
 {
-  $link = get_db_link();
+  $link = dbConnect();
   $insertFilename = mysqli_escape_string($link, $filename);
   $insertPreview = mysqli_escape_string($link, $preview);
-  $query = "INSERT INTO images(`filename`, `previewfile`) values('{$insertFilename}', '{$insertPreview}')";
+  $query = "INSERT INTO `images`(`filename`, `previewfile`) VALUES('{$insertFilename}', '{$insertPreview}')";
   return mysqli_query($link, $query);
 }
 
-function db_get_images()
+function dbAddImageView($id)
 {
-  $link = get_db_link(); 
-  $query = "select * from images order by `views` desc, `id`";
+  $link = dbConnect();
+  $imageId = (int) $id;
+  $query = "UPDATE `images` SET `views` = `views` + 1 WHERE `id` = {$imageId}";
+  return mysqli_query($link, $query);
+}
+
+function dbGetImages()
+{
+  $link = dbConnect();
+  $query = "SELECT * FROM `images` ORDER BY `views` DESC, `id`";
   return mysqli_fetch_all(mysqli_query($link, $query), MYSQLI_ASSOC);
 }
 
-function db_get_image($id)
+function dbGetImage($id)
 {
-  $link = get_db_link();
-  $imgId = (int) $id;
-  $query = "select * from images where `id` = {$imgId}";
+  $link = dbConnect();
+  $imageId = (int) $id;
+  $query = "SELECT * FROM `images` WHERE `id` = {$imageId}";
+  return mysqli_fetch_all(mysqli_query($link, $query), MYSQLI_ASSOC)[0];
+}
+
+function dbGetCatalog()
+{
+  $link = dbConnect();
+  $query =
+    "SELECT
+       `p`.`id`,
+       `p`.`product_name`,
+       `p`.`product_description`,
+       `img`.`filename`,
+       `img`.`previewfile`,
+       `counter`.`reviews_counter`
+    FROM `products` as `p`
+    LEFT JOIN (SELECT `product_id`, count(1) as `reviews_counter` FROM `product_review` GROUP BY `product_id`) 
+        AS `counter` on `counter`.`product_id` = `p`.`id` 
+    LEFT JOIN `images` as `img` on `img`.`id` = `p`.`image_id`
+    ORDER BY `p`.`views` DESC, `p`.`id` DESC";
   return mysqli_fetch_all(mysqli_query($link, $query), MYSQLI_ASSOC);
 }
 
-function db_add_image_view($id)
+function dbGetProduct($id)
 {
-  $link = get_db_link();
-  $imgId = (int) $id;
-  $query = "update `images` set `views` = `views` + 1 where `id` = {$imgId}";
+  $link = dbConnect();
+  $productId = (int) $id;
+  $query =
+    "SELECT 
+      `p`.`id`,
+      `p`.`product_name`,
+      `p`.`product_description`,
+      `p`.`views`,
+      `img`.`filename`,
+      `img`.`previewfile`
+    FROM `products` as `p` 
+    LEFT JOIN `images` as `img` on `img`.`id` = `p`.`image_id`
+    WHERE `p`.`id` = {$productId}";
+  return mysqli_fetch_all(mysqli_query($link, $query), MYSQLI_ASSOC)[0];
+}
+
+function dbGetProductReviews($id)
+{
+  $link = dbConnect();
+  $productId = (int) $id;
+  $query = "SELECT * FROM `product_review` WHERE `product_id` = {$productId} ORDER BY `id` DESC";
+  return mysqli_fetch_all(mysqli_query($link, $query), MYSQLI_ASSOC);
+}
+
+
+function dbAddProductReview($id, $rating, $reviewText)
+{
+  $link = dbConnect();
+  $productId = (int) $id;
+  $rat = (int) $rating;
+  $review = mysqli_escape_string($link, $reviewText);
+  $query = "INSERT INTO `product_review`(`product_id`, `rating`, `review_text`) VALUES('{$productId}', '{$rat}', '{$review}')";
+  return mysqli_query($link, $query);
+}
+
+function dbAddProductView($id)
+{
+  $link = dbConnect();
+  $productId = (int) $id;
+  $query = "UPDATE `products` SET `views` = `views` + 1 WHERE `id` = {$productId}";
   return mysqli_query($link, $query);
 }
