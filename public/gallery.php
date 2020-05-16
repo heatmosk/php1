@@ -6,11 +6,8 @@ require_once ENGINE_DIR . 'render.php';
 require_once ENGINE_DIR . 'fs.php';
 require_once ENGINE_DIR . 'base.php';
 require_once ENGINE_DIR . 'db.php';
+$mainMenu = include_once CONFIG_DIR . 'menu.php';
 
-$mainMenu = [
-  'Home' => ['url' => '/'],
-  'Gallery' => ['url' => '/gallery.php']
-];
 $mainMenuHTML = renderMenu($mainMenu);
 
 $acceptedImages =  ['jpg', 'jpeg', 'png'];
@@ -24,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && count($_FILES) > 0) {
       img_resize(IMAGES_DIR . $resultFileName, IMAGES_PREVIEW_DIR . $resultFileName, 125, 94);
     }
 
-    db_add_image(
+    dbAddImage(
       str_replace(PUBLIC_DIR, "/", IMAGES_DIR . $resultFileName),
       str_replace(PUBLIC_DIR, "/", IMAGES_PREVIEW_DIR . $resultFileName)
     );
@@ -34,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && count($_FILES) > 0) {
 }
 
 //$galleryImages = getFilesFromDir(IMAGES_DIR, $acceptedImages);
-$galleryImages = db_get_images(); 
+$galleryImages = dbGetImages(); 
 
 include VIEWS_DIR . "header.php";
 ?>

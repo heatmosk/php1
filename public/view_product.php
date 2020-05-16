@@ -10,24 +10,23 @@ $mainMenu = include_once CONFIG_DIR . 'menu.php';
 $mainMenuHTML = renderMenu($mainMenu);
 
 if (!isset($_GET["id"])) {
-  redirect("/gallery.php");
+  redirect("/catalog.php");
 }
-$imgId = (int) $_GET["id"];
 
-
-$imgInfo = dbGetImage($imgId);  
-dbAddImageView($imgId);
-$imageViews = $imgInfo['views'] + 1; 
+$productId = (int) $_GET["id"];
+$product = dbGetProduct($productId);
+$reviews = dbGetProductReviews($productId);
+$reviewsCounter = count($reviews);
+dbAddProductView($productId);
+$views = $product["views"] + 1;
 
 include VIEWS_DIR . "header.php";
-
-$reviewsCounter = count($reviews);
+ 
 ?>
 
 <div><?= $mainMenuHTML ?></div>
-<div>Просмотров: <?= $imageViews ?></div>
-<img src='<?= $imgInfo["filename"] ?>'
 
-<?php 
+<?php
+include VIEWS_DIR . "view_product.php";
 include VIEWS_DIR . "footer.php";
 ?>
