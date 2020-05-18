@@ -14,10 +14,10 @@ if (!isset($_GET["id"])) {
 }
 
 $productId = (int) $_GET["id"];
-$product = dbGetProduct($productId);
-$reviews = dbGetProductReviews($productId);
+$product = getProductById($productId);
+$reviews = getProductReviews($productId);
 $reviewsCounter = count($reviews);
-dbAddProductView($productId);
+addProductView($productId);
 $views = $product["views"] + 1;
 
 include VIEWS_DIR . "header.php";

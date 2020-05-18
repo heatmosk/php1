@@ -1,4 +1,7 @@
 <?php
+
+require_once "../config/main.php";
+
 function renderMenu($menu)
 {
   $result = "";
@@ -16,3 +19,10 @@ function renderMenu($menu)
   return $result;
 }
 
+function render(string $template, array $params = [])
+{
+    ob_start();
+    extract($params);
+    include VIEWS_DIR . "{$template}.php";
+    return ob_get_clean();
+}

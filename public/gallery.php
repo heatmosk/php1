@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && count($_FILES) > 0) {
       img_resize(IMAGES_DIR . $resultFileName, IMAGES_PREVIEW_DIR . $resultFileName, 125, 94);
     }
 
-    dbAddImage(
+    addImage(
       str_replace(PUBLIC_DIR, "/", IMAGES_DIR . $resultFileName),
       str_replace(PUBLIC_DIR, "/", IMAGES_PREVIEW_DIR . $resultFileName)
     );
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && count($_FILES) > 0) {
 }
 
 //$galleryImages = getFilesFromDir(IMAGES_DIR, $acceptedImages);
-$galleryImages = dbGetImages(); 
+$galleryImages = getImages(); 
 
 include VIEWS_DIR . "header.php";
 ?>

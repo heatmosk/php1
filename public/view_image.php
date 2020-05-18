@@ -15,8 +15,8 @@ if (!isset($_GET["id"])) {
 $imgId = (int) $_GET["id"];
 
 
-$imgInfo = dbGetImage($imgId);  
-dbAddImageView($imgId);
+$imgInfo = getImage($imgId);  
+addImageView($imgId);
 $imageViews = $imgInfo['views'] + 1; 
 
 include VIEWS_DIR . "header.php";
