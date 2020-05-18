@@ -7,6 +7,7 @@ function getUserByLogin($login)
 {
   $userLogin = mysqli_escape_string(dbConnect(), $login);
   $query = "SELECT * FROM `users` WHERE `login` = {$userLogin}";
+  echo $query;
   return dbQueryOne($query);
 }
 
