@@ -1,6 +1,6 @@
 <?php
 
-require_once "../config/main.php";
+require_once __DIR__ . "/../config/main.php";
 
 function dbConnect()
 {

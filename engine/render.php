@@ -1,6 +1,6 @@
 <?php
 
-require_once "../config/main.php";
+require_once __DIR__ . "/../config/main.php";
 
 function renderMenu($menu)
 {
@@ -21,8 +21,8 @@ function renderMenu($menu)
 
 function render(string $template, array $params = [])
 {
-    ob_start();
-    extract($params);
-    include VIEWS_DIR . "{$template}.php";
-    return ob_get_clean();
+  ob_start();
+  extract($params);
+  include VIEWS_DIR . $template . ".php";
+  return ob_get_clean();
 }

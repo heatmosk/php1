@@ -5,28 +5,27 @@ require_once ENGINE_DIR . "base.php";
 require_once ENGINE_DIR . "user.php";
 require_once ENGINE_DIR . "session.php";
 require_once ENGINE_DIR . 'render.php';
-$mainMenu = include_once CONFIG_DIR . 'menu.php';
 
-if (session("user_id")) {
-  $user = getUserById(session("user_id"));
-}
+$menu =  renderMenu(include_once CONFIG_DIR . 'menu.php');
+$content = $menu;
+echo render("main", ["content" => $content]);
+// require_once __DIR__ . '/../config/main.php';
+// require_once ENGINE_DIR . "base.php";
+// require_once ENGINE_DIR . "user.php";
+// require_once ENGINE_DIR . "session.php";
+// require_once ENGINE_DIR . 'render.php';
+// $mainMenu = include_once CONFIG_DIR . 'menu.php';
+// $params = [];
 
+// if (session("user_id")) {
+//   $params["user"] = getUserById(session("user_id"));
+//   $params["greeting"] = "Привет, " . $params["user"]["login"] . "!";
+// }
 
-$title = 'Приветствие!';
-$user = 'Alex';
-$greeting = 'Привет';
+// $mainMenuHTML = renderMenu($mainMenu);
 
-$year = date("Y");
+// include VIEWS_DIR . "header.php";
+// render("", $params);
 
-$mainMenuHTML = renderMenu($mainMenu);
-
-include VIEWS_DIR . "header.php";
-?>
-
-<div><?= $mainMenuHTML ?></div>
-<div><?= $greeting . ', ' . $user ?></div>
-<!-- <div><?= $year ?></div> -->
-
-<?php
-include VIEWS_DIR . "footer.php";
-?>
+ 
+// include VIEWS_DIR . "footer.php";
