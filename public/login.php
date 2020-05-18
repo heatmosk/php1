@@ -11,16 +11,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   if (checkUserPassword($login, $pass)) {
     $user = getUserByLogin($login);
     setSession("user_id", $user["id"]);
+    $message = "Вход выполнен";
   } else {
     $message = "Неверное имя пользователя или пароль";
   }
+  echo $message;
+  exit(0);
 }
 
 
 ?>
 
 <div><?= $message ?></div>
-
 
 <?php
 
