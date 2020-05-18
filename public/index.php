@@ -2,8 +2,11 @@
 
 require_once __DIR__ . '/../config/main.php';
 require_once ENGINE_DIR . "base.php";
-require_once ENGINE_DIR . "user.php";
+require_once ENGINE_DIR . "fs.php";
+require_once ENGINE_DIR . "db.php"; 
 require_once ENGINE_DIR . "session.php";
+require_once ENGINE_DIR . "user.php";
+require_once ENGINE_DIR . "gallery.php";
 require_once ENGINE_DIR . 'render.php';
 
 $page = isset($_GET["page"]) ? get("page") : "index";
