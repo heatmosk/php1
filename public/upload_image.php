@@ -20,4 +20,4 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && count($_FILES) > 0) {
 }
 
 
-return compact($acceptedImages, $acceptedImagesFilter);
+return compact("acceptedImages", "acceptedImagesFilter");
