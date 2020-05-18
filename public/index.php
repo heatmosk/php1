@@ -9,9 +9,6 @@ $mainMenu = include_once CONFIG_DIR . 'menu.php';
 
 if (session("user_id")) {
   $user = getUserById(session("user_id"));
-  var_dump($user);
-} else {
-  echo "Вы не авторизованы!";
 }
 
 
