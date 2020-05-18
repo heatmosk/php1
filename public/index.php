@@ -10,11 +10,12 @@ require_once ENGINE_DIR . "gallery.php";
 require_once ENGINE_DIR . 'render.php';
 
 $page = isset($_GET["page"]) ? get("page") : "index";
- $page = "gallery";
+$page = "upload_image";
 $params = [];
 if (sessionGet("user_id")) {
   $params["user"] = getUserById(session("user_id"));
 }
+$params['title'] = "PAGE: " . $page;
 
 if ($page !== "index") { 
   $params = array_merge($params, include PUBLIC_DIR . $page . ".php");
