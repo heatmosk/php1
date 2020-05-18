@@ -18,6 +18,11 @@ function session($name)
   return $_SESSION[$name];
 }
 
+function sessionGet($name): bool 
+{
+  return isset($_SESSION[$name]);
+}
+
 function closeSession()
 {
   $_SESSION = [];

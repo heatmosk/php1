@@ -7,17 +7,15 @@ require_once ENGINE_DIR . "session.php";
 require_once ENGINE_DIR . 'render.php';
 
 $page = isset($_GET["page"]) ? get("page") : "index";
-
+$page = "gallery";
 $params = [];
-if (session("user_id")) {
+if (sessionGet("user_id")) {
   $params["user"] = getUserById(session("user_id"));
 }
 
-if ($page !== "index") {
-  echo "Page: ${page}<br>";
-  include PUBLIC_DIR . $page;
+if ($page !== "index") { 
+  include PUBLIC_DIR . $page . ".php";
 }
-
 echo render(VIEWS_DIR . "main", [
   "menu" => renderMenu(include_once CONFIG_DIR . 'menu.php'),
   "content" => render(VIEWS_DIR . $page, $params)
