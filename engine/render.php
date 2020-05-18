@@ -19,10 +19,18 @@ function renderMenu($menu)
   return $result;
 }
 
-function render(string $template, array $params = [])
+function render(string $page, array $params = [])
 {
+  $fileName = VIEWS_DIR . $page . ".php";
+  
   ob_start();
   extract($params);
-  include VIEWS_DIR . $template . ".php";
+
+  if (file_exists($fileName)) {
+    include $fileName;
+  } else {
+    die("Такой {$fileName} страницы не существует. 404");
+  }
+
   return ob_get_clean();
 }
