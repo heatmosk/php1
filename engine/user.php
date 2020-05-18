@@ -3,10 +3,17 @@
 require_once "db.php";
 require_once "base.php";
 
+function getUserById($id)
+{
+  $userId = (int) $id;
+  $query = "SELECT * FROM `users` WHERE `id` = {$userId}";
+  return dbQueryOne($query);
+}
+
 function getUserByLogin($login)
 {
   $userLogin = mysqli_escape_string(dbConnect(), $login);
-  $query = "SELECT * FROM `users` WHERE `login` = '{$userLogin}'"; 
+  $query = "SELECT * FROM `users` WHERE `login` = '{$userLogin}'";
   return dbQueryOne($query);
 }
 
@@ -14,4 +21,3 @@ function checkUserPassword($login, $password): bool
 {
   return getHash($password) == getUserByLogin($login)["pass"];
 }
-
