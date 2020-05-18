@@ -2,7 +2,6 @@
 
 require_once "db.php";
 
-
 function initSession()
 {
   $sessionId = session_id();
