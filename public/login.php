@@ -22,3 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <div><?= $message ?></div>
 
 
+<?php
+
+include VIEWS_DIR . "login_form.php";
+
+?>
