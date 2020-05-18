@@ -3,7 +3,7 @@
 return [
   'Home'    => ['url' => '/'],
   'Gallery' => ['url' => '/?page=gallery'],
-  'Gallery' => ['url' => '/?page=upload_image'],
+  'Upload' => ['url' => '/?page=upload_image'],
   // 'Catalog' => ['url' => '/catalog.php'],
   // 'Login'   => ['url' => '/login.php'],
   // 'Calc 1' => ['url' => '/calc1.php'],
