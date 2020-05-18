@@ -17,6 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   }
   echo $message;
   exit(0);
+} else {
+  echo ":1";
 }
 
 
