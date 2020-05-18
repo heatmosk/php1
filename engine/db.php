@@ -49,18 +49,7 @@ function dbGetCatalog()
 {
   $link = dbConnect();
   $query =
-    "SELECT
-       `p`.`id`,
-       `p`.`product_name`,
-       `p`.`product_description`,
-       `img`.`filename`,
-       `img`.`previewfile`,
-       `counter`.`reviews_counter`
-    FROM `products` as `p`
-    LEFT JOIN (SELECT `product_id`, count(1) as `reviews_counter` FROM `product_review` GROUP BY `product_id`) 
-        AS `counter` on `counter`.`product_id` = `p`.`id` 
-    LEFT JOIN `images` as `img` on `img`.`id` = `p`.`image_id`
-    ORDER BY `p`.`views` DESC, `p`.`id` DESC";
+    "SELECT * FROM `products` ORDER BY `views` DESC, `id` DESC";
   return mysqli_fetch_all(mysqli_query($link, $query), MYSQLI_ASSOC);
 }
 
@@ -69,16 +58,7 @@ function dbGetProduct($id)
   $link = dbConnect();
   $productId = (int) $id;
   $query =
-    "SELECT 
-      `p`.`id`,
-      `p`.`product_name`,
-      `p`.`product_description`,
-      `p`.`views`,
-      `img`.`filename`,
-      `img`.`previewfile`
-    FROM `products` as `p` 
-    LEFT JOIN `images` as `img` on `img`.`id` = `p`.`image_id`
-    WHERE `p`.`id` = {$productId}";
+    "SELECT * FROM `products` WHERE `id` = {$productId}";
   return mysqli_fetch_all(mysqli_query($link, $query), MYSQLI_ASSOC)[0];
 }
 
