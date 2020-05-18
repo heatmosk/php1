@@ -5,11 +5,11 @@ require_once VENDOR_DIR . "funcImgResize.php";
 require_once ENGINE_DIR . 'render.php';
 require_once ENGINE_DIR . 'fs.php';
 require_once ENGINE_DIR . 'base.php';
-require_once ENGINE_DIR . 'gallery.php'; 
+require_once ENGINE_DIR . 'gallery.php';
 
 $acceptedImages =  ['jpg', 'jpeg', 'png'];
 $acceptedImagesFilter = "." . implode(", .", $acceptedImages);
- 
+
 if ($_SERVER['REQUEST_METHOD'] === "POST" && count($_FILES) > 0) {
   $filesInfo = getFilesInfo($_FILES["images"]);
   foreach ($filesInfo as $fileInfo) {
@@ -22,12 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && count($_FILES) > 0) {
       str_replace(PUBLIC_DIR, "/", IMAGES_DIR . $resultFileName),
       str_replace(PUBLIC_DIR, "/", IMAGES_PREVIEW_DIR . $resultFileName)
     );
-    
-  } 
+  }
   redirect("/?page=gallery");
 }
- 
-$galleryImages = getImages(); 
- 
+
+return [
+  "galleryImages" => getImages()
+];
 // include VIEWS_DIR . "gallery.php";
 // include VIEWS_DIR . "upload_form.php";

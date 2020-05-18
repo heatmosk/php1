@@ -14,7 +14,7 @@ if (sessionGet("user_id")) {
 }
 
 if ($page !== "index") { 
-  include PUBLIC_DIR . $page . ".php";
+  $params = array_merge($params, include PUBLIC_DIR . $page . ".php");
 }
 echo render(VIEWS_DIR . "main", [
   "menu" => renderMenu(include_once CONFIG_DIR . 'menu.php'),
