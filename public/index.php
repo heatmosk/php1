@@ -7,7 +7,7 @@ require_once ENGINE_DIR . "session.php";
 require_once ENGINE_DIR . 'render.php';
 
 $page = isset($_GET["page"]) ? get("page") : "index";
-$page = "gallery";
+ 
 $params = [];
 if (sessionGet("user_id")) {
   $params["user"] = getUserById(session("user_id"));
