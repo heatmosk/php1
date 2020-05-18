@@ -8,8 +8,7 @@ require_once ENGINE_DIR . "base.php";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $login = post("login");
   $pass  = post("password");
-  echo $login . " " . $pass . "<br>";
-  exit(0);
+  echo $login . " " . $pass . "<br>"; 
   if (checkUserPassword($login, $pass)) {
     $user = getUserByLogin($login);
     setSession("user_id", $user["id"]);

@@ -8,10 +8,11 @@ function getUserByLogin($login)
   $userLogin = mysqli_escape_string(dbConnect(), $login);
   $query = "SELECT * FROM `users` WHERE `login` = {$userLogin}";
   echo $query;
+  exit(0);
   return dbQueryOne($query);
 }
 
 function checkUserPassword($login, $password): bool
 { 
-  return getHash($password) === getUserByLogin($login)["pass"];
+  return getHash($password) == getUserByLogin($login)["pass"];
 }
