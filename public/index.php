@@ -14,6 +14,7 @@ if (session("user_id")) {
 }
 
 if ($page !== "index") {
+  echo "Page: ${page}<br>";
   include PUBLIC_DIR . $page;
 }
 
