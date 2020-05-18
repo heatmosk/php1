@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && count($_FILES) > 0) {
 }
  
 $galleryImages = getImages(); 
-  
+
+var_dump($galleryImages);
 // include VIEWS_DIR . "gallery.php";
 // include VIEWS_DIR . "upload_form.php";

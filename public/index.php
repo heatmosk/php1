@@ -13,9 +13,11 @@ if (session("user_id")) {
   $params["user"] = getUserById(session("user_id"));
 }
 
-include_once PUBLIC_DIR . $page;
+if ($page !== "index") {
+  include PUBLIC_DIR . $page;
+}
 
-echo render("main", [
+echo render(VIEWS_DIR . "main", [
   "menu" => renderMenu(include_once CONFIG_DIR . 'menu.php'),
   "content" => render(VIEWS_DIR . $page, $params)
 ]);
