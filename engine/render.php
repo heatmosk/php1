@@ -21,8 +21,8 @@ function renderMenu($menu)
 
 function render(string $page, array $params = [])
 {
-  $fileName = VIEWS_DIR . $page . ".php";
-  
+  $fileName = $page . ".php";
+
   ob_start();
   extract($params);
 
