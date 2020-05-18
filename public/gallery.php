@@ -5,10 +5,7 @@ require_once VENDOR_DIR . "funcImgResize.php";
 require_once ENGINE_DIR . 'render.php';
 require_once ENGINE_DIR . 'fs.php';
 require_once ENGINE_DIR . 'base.php';
-require_once ENGINE_DIR . 'db.php';
-$mainMenu = include_once CONFIG_DIR . 'menu.php';
-
-$mainMenuHTML = renderMenu($mainMenu);
+require_once ENGINE_DIR . 'db.php'; 
 
 $acceptedImages =  ['jpg', 'jpeg', 'png'];
 $acceptedImagesFilter = "." . implode(", .", $acceptedImages);
@@ -27,20 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && count($_FILES) > 0) {
     );
     
   } 
-  redirect("/gallery.php");
+  redirect("/?page=gallery");
 }
-
-//$galleryImages = getFilesFromDir(IMAGES_DIR, $acceptedImages);
+ 
 $galleryImages = getImages(); 
-
-include VIEWS_DIR . "header.php";
-?>
-
-<div><?= $mainMenuHTML ?></div>
-
-
-<?php
-include VIEWS_DIR . "gallery.php";
-include VIEWS_DIR . "upload_form.php";
-include VIEWS_DIR . "footer.php";
-?>
+  
+// include VIEWS_DIR . "gallery.php";
+// include VIEWS_DIR . "upload_form.php";

@@ -13,7 +13,7 @@ if (session("user_id")) {
   $params["user"] = getUserById(session("user_id"));
 }
 
-echo "Page: {$page}<br>" . render("main", [
+echo render("main", [
   "menu" => renderMenu(include_once CONFIG_DIR . 'menu.php'),
   "content" => render($page, $params)
 ]);
