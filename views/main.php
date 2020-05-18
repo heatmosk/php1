@@ -8,6 +8,7 @@
 </head>
 
 <body>
+  <?= $menu ?>
   <?= $content ?>
 </body>
 
