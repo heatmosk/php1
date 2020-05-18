@@ -1,9 +1,9 @@
 <?php
 
-require_once "../config/main.php";
-require_once ENGINE_DIR . "db.php";
+require_once "../config/main.php"; 
 require_once ENGINE_DIR . "base.php";
 require_once ENGINE_DIR . "user.php";
+require_once ENGINE_DIR . "session.php";
 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
