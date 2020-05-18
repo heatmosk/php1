@@ -6,9 +6,7 @@ require_once "base.php";
 function getUserByLogin($login)
 {
   $userLogin = mysqli_escape_string(dbConnect(), $login);
-  $query = "SELECT * FROM `users` WHERE `login` = {$userLogin}";
-  echo $query;
-  exit(0);
+  $query = "SELECT * FROM `users` WHERE `login` = {$userLogin}"; 
   return dbQueryOne($query);
 }
 
