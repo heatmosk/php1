@@ -14,3 +14,4 @@ function checkUserPassword($login, $password): bool
 {
   return getHash($password) == getUserByLogin($login)["pass"];
 }
+
