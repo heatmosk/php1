@@ -12,15 +12,15 @@ require_once ENGINE_DIR . 'render.php';
 require_once VENDOR_DIR . 'funcImgResize.php';
 
 $page = isset($_REQUEST["page"]) ? request("page") : "index";
- 
+
 
 $params = [];
-if (sessionGet("user_id")) {
+if (sessionIsSet("user_id")) {
   $params["user"] = getUserById(session("user_id"));
 }
 $params['title'] = "PAGE: " . $page;
 
-if ($page !== "index") { 
+if ($page !== "index") {
   $params = array_merge($params, include PUBLIC_DIR . $page . ".php");
 }
 

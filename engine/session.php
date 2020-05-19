@@ -18,7 +18,7 @@ function session($name)
   return $_SESSION[$name];
 }
 
-function sessionGet($name): bool 
+function sessionIsSet($name): bool 
 {
   return isset($_SESSION[$name]);
 }
