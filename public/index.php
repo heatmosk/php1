@@ -29,7 +29,7 @@ if ($page !== "index") {
   $params = array_merge($params, include PUBLIC_DIR . $page . ".php");
 } 
 echo render(VIEWS_DIR . "main", [
-  "menu" => ,
+  "menu" => renderMenu($menu),
   "content" => render(VIEWS_DIR . $page, $params)
 ]); 
 // require_once __DIR__ . '/../config/main.php';
