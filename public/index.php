@@ -22,8 +22,7 @@ $params['title'] = "PAGE: " . $page;
 
 if ($page !== "index") {
   $params = array_merge($params, include PUBLIC_DIR . $page . ".php");
-}
-
+} 
 echo render(VIEWS_DIR . "main", [
   "menu" => renderMenu(include_once CONFIG_DIR . 'menu.php'),
   "content" => render(VIEWS_DIR . $page, $params)
