@@ -7,6 +7,7 @@ require_once ENGINE_DIR . "db.php";
 require_once ENGINE_DIR . "session.php";
 require_once ENGINE_DIR . "user.php";
 require_once ENGINE_DIR . "gallery.php";
+require_once ENGINE_DIR . "product.php";
 require_once ENGINE_DIR . 'render.php';
 require_once VENDOR_DIR . 'funcImgResize.php';
 

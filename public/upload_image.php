@@ -19,5 +19,4 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && count($_FILES) > 0) {
   redirect("/?page=gallery");
 }
 
-
 return compact("acceptedImages", "acceptedImagesFilter");
