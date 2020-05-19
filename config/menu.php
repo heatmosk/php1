@@ -2,7 +2,7 @@
 
 return [
   'Home'    => ['url' => '/'],
-  'Catalog' => ['url' => '/?page=catalog'],
+  'Products' => ['url' => '/?page=products'],
   'Gallery' => ['url' => '/?page=gallery'],
   'Upload' => ['url' => '/?page=upload_image'],
   'Login' => ['url' => '/?page=login'],
