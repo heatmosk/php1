@@ -1,4 +1,4 @@
-<div>В каталоге товаров: <?= count($products) ?></div>
+<div>В каталоге товаров: <?= $productsCounter ?></div>
 <div class='catalog'>
   <?php foreach ($products as $product) : ?>
     <div class='catalog__item'>
