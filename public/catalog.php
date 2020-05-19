@@ -1,6 +1,6 @@
 <?php
 
-$products = GetProducts();
+$products = getProducts();
 $productsCounter = count($catalog);
 
-return compact("catalog", "productsCounter");
+return compact("products", "productsCounter");

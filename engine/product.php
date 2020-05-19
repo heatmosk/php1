@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/db.php";
 
-function GetProducts()
+function getProducts()
 {
   $query = "SELECT * FROM `products` ORDER BY `views` DESC, `id` DESC";
   return dbQueryAll($query);
