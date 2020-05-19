@@ -13,14 +13,15 @@ require_once VENDOR_DIR . 'funcImgResize.php';
 
 $page = isset($_REQUEST["page"]) ? request("page") : "index";
  
+$menu = include_once CONFIG_DIR . 'menu.php';
 
 $params = [];
 if (sessionIsSet("user_id")) {
   $params["user"] = getUserById(session("user_id"));
   $params["user_id"] = session("user_id");
-} else {
-  $params["user"] = false;
-}
+  unset($menu["Login"]);
+  $menu['Logout'] = ['url' => '/?page=logout'];
+}  
 
 $params['title'] = "PAGE: " . $page;
 
@@ -28,11 +29,9 @@ if ($page !== "index") {
   $params = array_merge($params, include PUBLIC_DIR . $page . ".php");
 } 
 echo render(VIEWS_DIR . "main", [
-  "menu" => renderMenu(include_once CONFIG_DIR . 'menu.php'),
+  "menu" => ,
   "content" => render(VIEWS_DIR . $page, $params)
-]);
-echo "<hr>";
-var_dump($params);
+]); 
 // require_once __DIR__ . '/../config/main.php';
 // require_once ENGINE_DIR . "base.php";
 // require_once ENGINE_DIR . "user.php";
