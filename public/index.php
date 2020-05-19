@@ -17,6 +17,7 @@ $page = isset($_REQUEST["page"]) ? request("page") : "index";
 $params = [];
 if (sessionIsSet("user_id")) {
   $params["user"] = getUserById(session("user_id"));
+  $params["user_id"] = session("user_id");
 }
 $params['title'] = "PAGE: " . $page;
 
