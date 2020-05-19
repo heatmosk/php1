@@ -22,17 +22,17 @@ function addProductView($id)
   return dbExecute($query);
 }
 
-function getProductImages($id)
+function getProductImage($id)
 {
-  $prodId = (int) $id;
-  $query = "SELECT * FROM `product_images` WHERE `product_id` = {$prodId}";
+  $imgId = (int) $id;
+  $query = "SELECT * FROM `images` WHERE `id` = {$imgId}";
   return dbQueryAll($query);
 }
 
 function getProductReviews($id)
 {
   $prodId = (int) $id;
-  $query = "SELECT * FROM `product_reviews` WHERE `product_id` = {$prodId}";
+  $query = "SELECT * FROM `product_review` WHERE `product_id` = {$prodId}";
   return dbQueryAll($query);
 }
 
