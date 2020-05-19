@@ -23,7 +23,7 @@ function addProductToCart($cartId, $productId)
   $cart = getCartById($cartId);
   $cartProducts = json_decode($cart["products"], true);
   $product = getProductById($productId);
-  $cartProducts[$productId]["name"] = $product["name"];
+  $cartProducts[$productId]["product_name"] = $product["product_name"];
   $cartProducts[$productId]["amount"] = ((int) $cartProducts[$productId]["amount"]) + 1;
   $cartProducts[$productId]["cost"] = $product["cost"];
   $cartProducts[$productId]["totalCost"] = $cartProducts[$productId]["amount"] * $product["cost"];
@@ -31,6 +31,26 @@ function addProductToCart($cartId, $productId)
   $query = "UPDATE `cart` SET `products` = '{$cartProductsJSON}'  WHERE `id` = {$cartId}";
   return dbExecute($query);
 }
+
+function removeProductFromCart($cartId, $productId)
+{
+  $cart = getCartById($cartId);
+  $cartProducts = json_decode($cart["products"], true);
+  $product = getProductById($productId);
+  $cartProducts[$productId]["amount"] = ((int) $cartProducts[$productId]["amount"]) - 1;
+  if ($cartProducts[$productId]["amount"] <= 0) {
+    unset($cartProducts[$productId]);
+  } else {
+    $cartProducts[$productId]["product_name"] = $product["product_name"];
+    $cartProducts[$productId]["cost"] = $product["cost"];
+    $cartProducts[$productId]["totalCost"] = $cartProducts[$productId]["amount"] * $product["cost"];
+  }
+  $cartProductsJSON = json_encode($cartProducts);
+  $query = "UPDATE `cart` SET `products` = '{$cartProductsJSON}'  WHERE `id` = {$cartId}";
+  return dbExecute($query);
+}
+
+
 function getUserCart($userId)
 {
   $cart = getCartByUserId($userId);
