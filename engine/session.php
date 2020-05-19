@@ -20,6 +20,7 @@ function session($name)
 
 function sessionIsSet($name): bool 
 {
+  initSession();
   return isset($_SESSION[$name]);
 }
 

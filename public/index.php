@@ -18,7 +18,10 @@ $params = [];
 if (sessionIsSet("user_id")) {
   $params["user"] = getUserById(session("user_id"));
   $params["user_id"] = session("user_id");
+} else {
+  $params["user"] = false;
 }
+
 $params['title'] = "PAGE: " . $page;
 
 if ($page !== "index") {
