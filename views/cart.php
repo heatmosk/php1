@@ -3,22 +3,35 @@
     <?php if (count($cart["products"]) == 0) : ?>
       Корзина пуста
     <?php else : ?>
-      <div>
-        <label>Название</label>
-        <label>Количество</label>
-        <label>Цена</label>
-        <label>Стоимость</label>
-      </div>
-      <?php foreach ($cart["products"] as $product) : ?>
-        <div c;ass="cart__product">
-          <a href="/?page=view_product&id=<?= $product["id"] ?>"><?= $product['product_name'] ?></a>
-          <?= $product['amount'] ?>
-          <?= $product['cost'] ?>
-          <?= $product['totalCost'] ?>
-          <a href="/?page=remove_product&id=<?= $product["id"] ?>">Убрать</a>
-        </div>
-      <?php endforeach; ?>
-      <div>Итого: <?= $cart["cost"] ?> </div>
+      <table>
+        <tr>
+          <th>Название</th>
+          <th>Количество</th>
+          <th>Цена</th>
+          <th>Стоимость</th>
+          <th></th>
+        </tr>
+        <?php foreach ($cart["products"] as $product) : ?>
+          <tr class="cart__product">
+            <td>
+              <a href="/?page=view_product&id=<?= $product["id"] ?>"><?= $product['product_name'] ?></a>
+            </td>
+            <td>
+              <?= $product['amount'] ?>
+            </td>
+            <td>
+              <?= $product['cost'] ?>
+            </td>
+            <td>
+              <?= $product['totalCost'] ?>
+            </td>
+            <td>
+              <a href="/?page=remove_product&id=<?= $product["id"] ?>">Убрать</a>
+            </td>
+          </tr>
+        <?php endforeach; ?>
+        <div>Итого: <?= $cart["cost"] ?> </div>
+      </table>
     <?php endif; ?>
   </div>
 </div>
