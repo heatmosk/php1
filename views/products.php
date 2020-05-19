@@ -4,7 +4,10 @@
     <div class='catalog__item'>
       <div>
         <a class='catalog__item__link' href='/?page=view_product&id=<?= $product['id'] ?>'>
-          <h3><?= $product['product_name'] ?></h3>
+          <?= $product['product_name'] ?>
+        </a>
+        <a class='catalog__item__link' href='/?page=add_product&id=<?= $product['id'] ?>'>
+          Добавить в корзину
         </a>
       </div>
       <div>
