@@ -23,6 +23,7 @@ function addProductToCart($cartId, $productId)
   $cart = getCartById($cartId);
   $cartProducts = json_decode($cart["products"], true);
   $product = getProductById($productId);
+  $cartProducts[$productId]["id"] = $product["id"];
   $cartProducts[$productId]["product_name"] = $product["product_name"];
   $cartProducts[$productId]["amount"] = ((int) $cartProducts[$productId]["amount"]) + 1;
   $cartProducts[$productId]["cost"] = $product["cost"];
@@ -41,6 +42,7 @@ function removeProductFromCart($cartId, $productId)
   if ($cartProducts[$productId]["amount"] <= 0) {
     unset($cartProducts[$productId]);
   } else {
+    $cartProducts[$productId]["id"] = $product["id"];
     $cartProducts[$productId]["product_name"] = $product["product_name"];
     $cartProducts[$productId]["cost"] = $product["cost"];
     $cartProducts[$productId]["totalCost"] = $cartProducts[$productId]["amount"] * $product["cost"];
