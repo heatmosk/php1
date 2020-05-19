@@ -7,7 +7,7 @@ if (!isset($_GET["id"])) {
 $productId = (int) get("id");
 $product = getProductById($productId);
 $reviews = getProductReviews($productId);
-$product["image"] = getProductImage($product["image_id"]);
+$product["image"] = getProductImage($product["image_id"])[0];
 $reviewsCounter = count($reviews);
 addProductView($productId);
 $views = $product["views"] + 1;
