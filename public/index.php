@@ -8,6 +8,7 @@ require_once ENGINE_DIR . "session.php";
 require_once ENGINE_DIR . "user.php";
 require_once ENGINE_DIR . "gallery.php";
 require_once ENGINE_DIR . 'render.php';
+require_once VENDOR_DIR . 'funcImgResize.php';
 
 $page = isset($_REQUEST["page"]) ? request("page") : "index";
 echo "page: {$page}<br>";
