@@ -5,8 +5,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $pass  = post("password");
   if (checkUserPassword($login, $pass)) {
     $user = getUserByLogin($login);
-    setSession("user_id", $user["id"]); 
-    redirect("/");
+    setSession("user_id", $user["id"]);
+    $message = "ВСЁ ОК"; 
+    // redirect("/");
   } else {
     $message = "Неверное имя пользователя или пароль";
   }
