@@ -18,6 +18,10 @@ function post($name)
 {
   return $_POST[$name];
 }
+function request($name)
+{
+  return $_REQUEST[$name];
+}
 
 function getHash(string $str): string
 {
