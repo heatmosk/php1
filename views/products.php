@@ -8,7 +8,7 @@
         </a>
       </div>
       <div>
-        <a class='catalog__item__link' href='/view_product.php?id=<?= $product['id'] ?>'>
+        <a class='catalog__item__link' href='/?page=view_product&id=<?= $product['id'] ?>'>
           <img class='product__image-preview' src='<?= $product['image']['previewfile'] ?>'>
         </a>
       </div>
