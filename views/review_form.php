@@ -1,6 +1,6 @@
 <div>
   <h2>Добавьте свой отзыва</h2>
-  <form action="" enctype="multipart/form-data" method="post">
+  <form action="/?page=login" enctype="multipart/form-data" method="post">
     <input type="hidden" name="id" value="<?= $productId ?>">
     <div>Ваша оценка: <select name="rating">
         <option value="1">1</option>
