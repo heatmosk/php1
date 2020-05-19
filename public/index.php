@@ -9,8 +9,8 @@ require_once ENGINE_DIR . "user.php";
 require_once ENGINE_DIR . "gallery.php";
 require_once ENGINE_DIR . 'render.php';
 
-$page = isset($_GET["page"]) ? get("page") : "index";
-$page = "upload_image";
+$page = isset($_GET["page"]) ? get("page") : "index"; 
+
 $params = [];
 if (sessionGet("user_id")) {
   $params["user"] = getUserById(session("user_id"));
