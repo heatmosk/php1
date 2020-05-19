@@ -12,7 +12,7 @@ require_once ENGINE_DIR . 'render.php';
 require_once VENDOR_DIR . 'funcImgResize.php';
 
 $page = isset($_REQUEST["page"]) ? request("page") : "index";
-
+ 
 
 $params = [];
 if (sessionIsSet("user_id")) {
