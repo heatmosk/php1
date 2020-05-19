@@ -12,3 +12,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   }
   return compact("message");
 }
+
+return [];
