@@ -10,7 +10,7 @@ $mainMenuHTML = renderMenu($mainMenu);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST["id"]) && isset($_POST["rating"]) && isset($_POST["review_text"])) {
-    dbAddProductReview($_POST["id"], $_POST["rating"], htmlentities(strip_tags($_POST["review_text"])));
+    dbAddProductReview($_POST["id"], $_POST["rating"], $_POST["review_text"]);
   }
   redirect("/view_product.php?id=" . $_POST["id"]);
 }

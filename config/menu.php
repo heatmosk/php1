@@ -1,9 +1,10 @@
 <?php
 
 return [
-  'Home' => ['url' => '/'],
-  'Gallery' => ['url' => '/gallery.php'],
-  'Catalog' => ['url' => '/catalog.php'],
-  'Calc 1' => ['url' => '/calc1.php'],
-  'Calc 2' => ['url' => '/calc2.php'],
+  'Home'    => ['url' => '/'],
+  'Products' => ['url' => '/?page=products'],
+  'Gallery' => ['url' => '/?page=gallery'],
+  'Upload' => ['url' => '/?page=upload_image'],
+  'Login' => ['url' => '/?page=login'],
+  'Cart' => ['url' => '/?page=cart']
 ];

@@ -1,25 +1,35 @@
 <?php
 
 require_once __DIR__ . '/../config/main.php';
+require_once ENGINE_DIR . "base.php";
+require_once ENGINE_DIR . "fs.php";
+require_once ENGINE_DIR . "db.php";
+require_once ENGINE_DIR . "session.php";
+require_once ENGINE_DIR . "user.php";
+require_once ENGINE_DIR . "gallery.php";
+require_once ENGINE_DIR . "products.php";
+require_once ENGINE_DIR . "cart.php";
 require_once ENGINE_DIR . 'render.php';
-require_once ENGINE_DIR . 'fs.php';
-$mainMenu = include_once CONFIG_DIR . 'menu.php';
+require_once VENDOR_DIR . 'funcImgResize.php';
 
-$title = 'Приветствие!';
-$user = 'Alex';
-$greeting = 'Привет';
+$page = isset($_REQUEST["page"]) ? request("page") : "index";
+ 
+$menu = include_once CONFIG_DIR . 'menu.php';
 
-$year = date("Y");
+$params = [];
+if (sessionIsSet("user_id")) {
+  $params["user"] = getUserById(session("user_id"));
+  $params["user_id"] = session("user_id");
+  unset($menu["Login"]);
+  $menu['Logout'] = ['url' => '/?page=logout'];
+}  
 
-$mainMenuHTML = renderMenu($mainMenu);
+$params['title'] = "PAGE: " . $page;
 
-include VIEWS_DIR . "header.php";  
-?>
-
-<div><?= $mainMenuHTML ?></div>
-<div><?= $greeting . ', ' . $user ?></div>
-<!-- <div><?= $year ?></div> -->
-
-<?php
-include VIEWS_DIR . "footer.php";
-?>
+if ($page !== "index") {
+  $params = array_merge($params, include PUBLIC_DIR . $page . ".php");
+} 
+echo render(VIEWS_DIR . "main", [
+  "menu" => renderMenu($menu),
+  "content" => render(VIEWS_DIR . $page, $params)
+]);  

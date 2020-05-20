@@ -1,4 +1,7 @@
 <?php
+
+require_once __DIR__ . "/../config/main.php";
+
 function renderMenu($menu)
 {
   $result = "";
@@ -16,3 +19,18 @@ function renderMenu($menu)
   return $result;
 }
 
+function render(string $page, array $params = [])
+{
+  $fileName = $page . ".php";
+
+  ob_start();
+  extract($params);
+
+  if (file_exists($fileName)) {
+    include $fileName;
+  } else {
+    die("Такой {$fileName} страницы не существует. 404");
+  }
+
+  return ob_get_clean();
+}

@@ -1,0 +1,48 @@
+<?php
+
+require_once __DIR__ . "/db.php";
+
+function getProducts()
+{
+  $query = "SELECT * FROM `products` ORDER BY `views` DESC, `id` DESC";
+  return dbQueryAll($query);
+}
+
+function getProductById($id)
+{
+  $prodId = (int) $id;
+  $query = "SELECT * FROM `products` WHERE `id` = {$prodId}";
+  return dbQueryOne($query);
+}
+
+function addProductView($id)
+{
+  $prodId = (int) $id;
+  $query = "UPDATE `products` SET `views` = `views` + 1 WHERE `id` = {$prodId}";
+  return dbExecute($query);
+}
+
+function getProductImage($id)
+{
+  $imgId = (int) $id;
+  $query = "SELECT * FROM `images` WHERE `id` = {$imgId}";
+  return dbQueryAll($query);
+}
+
+function getProductReviews($id)
+{
+  $prodId = (int) $id;
+  $query = "SELECT * FROM `product_review` WHERE `product_id` = {$prodId}";
+  return dbQueryAll($query);
+}
+
+
+function addProductReview($id, $rating, $reviewText)
+{
+  $productId = (int) $id;
+  $rate = (int) $rating;
+  $review = htmlentities(strip_tags($reviewText));
+  $review = mysqli_escape_string(dbConnect(), $reviewText);
+  $query = "INSERT INTO `product_review`(`product_id`, `rating`, `review_text`) VALUES('{$productId}', '{$rate}', '{$review}')";
+  return dbExecute($query);
+}
