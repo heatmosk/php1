@@ -2,35 +2,25 @@
 
 require_once __DIR__ . "/../config/main.php";
 
-function renderMenu($menu)
-{
-  $result = "";
-  if (count($menu) > 0) {
-    foreach ($menu as $menuText => $menuItem) {
-      $result .= "<li class='menu__item'>";
-      $result .= "<a href='" . $menuItem['url'] . "'>" . $menuText . "</a>";
-      if (array_key_exists('submenu', $menuItem)) {
-        $result .= renderMenu($menuItem['submenu']);
-      }
-      $result .= "</li>";
-    }
-    $result = "<ul class='menu'>" . $result . "</ul>";
+function render(
+  string $template,
+  array $params = [],
+  $useLayout = true
+) {
+  $content = renderTemplate($template, $params);
+  if ($useLayout) {
+    $header = $params["header"] ?? "";
+    $footer = $params["footer"] ?? "";
+    $menu = isset($params["menu"]) ? renderTemplate("menu/index", ["menu" => $params["menu"]]) : "";
+    $content = renderTemplate('layout', compact("content", "menu", "header", "footer"));
   }
-  return $result;
+  return $content;
 }
 
-function render(string $page, array $params = [])
+function renderTemplate(string $template, array $params = [])
 {
-  $fileName = $page . ".php";
-
   ob_start();
   extract($params);
-
-  if (file_exists($fileName)) {
-    include $fileName;
-  } else {
-    die("Такой {$fileName} страницы не существует. 404");
-  }
-
+  include VIEWS_DIR . "{$template}.php";
   return ob_get_clean();
 }

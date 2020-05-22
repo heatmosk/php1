@@ -1,4 +1,0 @@
-<?php
-
-closeSession();
-redirect("/");
