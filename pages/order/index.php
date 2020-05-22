@@ -10,12 +10,14 @@ $orders = array_map(
       "status" => getOrderStatus($orderInfo["status_id"]),
       "products" => array_map(function ($prod) {
         $productInfo =  getProductById($prod["product_id"]);
+
         return [
           "id" => $prod["product_id"],
           "name" => $productInfo["name"],
           "amount" => $prod["product_amount"],
           "cost" => $productInfo["cost"],
           "totalCost" => $prod["product_amount"] *  $productInfo["cost"],
+          "image" => array_shift(getProductImages($prod["product_id"]))
         ];
       }, $products),
     ];
