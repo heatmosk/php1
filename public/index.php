@@ -6,7 +6,7 @@ require ENGINE_DIR . "autoload.php";
 session_start();
 
 if (!$requestUri = preg_replace(['#^/#', "#[?].*#"], "", $_SERVER['REQUEST_URI'])) {
-    $requestUri = 'product';
+    $requestUri = 'auth';
 }
 
 $parts = explode("/", $requestUri);

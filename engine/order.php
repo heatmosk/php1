@@ -43,3 +43,32 @@ function getOrderStatus($orderId)
   $query = "SELECT * FROM `status` WHERE `id` = {$id}";
   return dbQueryOne($query);
 }
+
+
+function getAllOrderStatuses()
+{
+  $query = "SELECT * FROM `status` ORDER BY `id`";
+  return dbQueryAll($query);
+}
+
+function setOrderStatus($orderId, $statusId)
+{
+  $id = (int) $orderId;
+  $stId = (int) $statusId;
+  $query = "UPDATE `order` set `status_id` = {$stId} WHERE `id` = {$id}";
+  return dbExecute($query);
+}
+
+function deleteOrderProducts($orderId)
+{
+  $id = (int) $orderId;
+  $query = "DELETE FROM `order_product` WHERE `order_id` = {$id}";
+  return dbExecute($query);
+}
+
+function deleteOrder($orderId)
+{
+  $id = (int) $orderId;
+  $query = "DELETE FROM `order` WHERE `id` = {$id}";
+  return dbExecute($query);
+}

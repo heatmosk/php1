@@ -1,6 +1,5 @@
 <?php
 
-
 $orders = array_map(
   function ($orderInfo) {
     $products = getOrderProducts($orderInfo["id"]);
@@ -31,6 +30,5 @@ foreach ($orders as $orderIndex => $order) {
   }, $order["products"]));
 }
 
-// header('Content-Type: application/json');
-// echo json_encode($orders);
-echo render("order/index", compact("menu", "orders", "user"));
+
+echo render("order/index", compact("orders"), false);

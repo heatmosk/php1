@@ -1,11 +1,12 @@
 <?php if (empty($orders)) : ?>
   <div>Заказов пока что не было</div>
 <?php else : ?>
-  <div>Список моих заказов</div>
+  <div>Список заказов</div>
   <?php foreach ($orders as $order) : ?>
     <table cellpadding="0" cellspacing="0">
       <tr>
-        <th colspan="2">Название</th>
+        <th>Изображение </th>
+        <th>Название</th>
         <th>Цена</th>
         <th>Количество</th>
       </tr>
@@ -33,6 +34,15 @@
         <td>Общая сумма: </td>
         <td colspan="3"><?= $order["totalCost"] ?></td>
       </tr>
+      <tr>
+        <td>Статус: </td>
+        <td><?= $order["status"]["status"] ?></td>
+        <td colspan="2">
+          <?php if ($user["editor"] ?? false) : ?>
+            <a href="/order/edit?id=<?= $order["id"] ?>">Редактировать</a>
+          <?php endif; ?>
+        </td>
+      </tr>
     </table>
     <br />
     <hr />
@@ -40,14 +50,3 @@
 
   <?php endforeach; ?>
 <?php endif; ?>
-
-
-<style type="text/css">
-  th,
-  td {
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    text-align: center;
-    vertical-align: middle;
-  }
-</style>
