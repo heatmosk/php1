@@ -7,10 +7,15 @@ define("UPLOADS_DIR", DOCUMENT_ROOT . "uploads/");
 define("PUBLIC_DIR", DOCUMENT_ROOT . "public/");
 define("IMAGES_DIR", DOCUMENT_ROOT . "public/img/");
 define("IMAGES_PREVIEW_DIR", DOCUMENT_ROOT . "public/img/preview/");
-define("VENDOR_DIR", DOCUMENT_ROOT . "vendor/");
-define("LAYOUTS_DIR", DOCUMENT_ROOT . "layouts/");
+define("VENDOR_DIR", DOCUMENT_ROOT . "vendor/"); 
+define("PAGES_DIR", DOCUMENT_ROOT . "pages/");  
+define("LAYOUTS_DIR", DOCUMENT_ROOT . "layouts/");  
+
 
 define("DB_HOST", "localhost");
 define("DB_USER", "php1user");
 define("DB_PASSWORD", "P@Svv0rd");
 define("DB_BASE", "php1");
+
+
+define("EDITOR_ROLES", ["admin", "manager"]);

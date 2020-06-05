@@ -1,37 +1,16 @@
 <?php
 
-require_once __DIR__ . "/db.php";
-
-function initSession()
+function session_get($name)
 {
-  $sessionId = session_id();
-  if (empty($sessionId)) {
-    session_start();
-    $sessionId = session_id();
-  }
-  return $sessionId;
-}
-
-function session($name)
-{
-  initSession();
   return $_SESSION[$name];
 }
 
-function sessionIsSet($name): bool 
+function session_is_set($name): bool
 {
-  initSession();
   return isset($_SESSION[$name]);
 }
 
-function closeSession()
+function session_set($name, $value)
 {
-  $_SESSION = [];
-  session_destroy();
-}
-
-function setSession($name, $value)
-{
-  initSession();
   $_SESSION[$name] = $value;
 }

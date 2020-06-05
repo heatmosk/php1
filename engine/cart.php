@@ -1,16 +1,16 @@
 <?php
 
-
-require_once __DIR__ . "/db.php";
-require_once __DIR__ . "/products.php";
+require_once __DIR__ . "/../config/main.php";
+require_once ENGINE_DIR . "db.php";
 
 
 function getCartById($id)
 {
   $cartId = (int) $id;
-  $query = "SELECT * FROM `cart` WHERE `id` = {$id}";
+  $query = "SELECT * FROM `cart` WHERE `id` = {$cartId}";
   return dbQueryOne($query);
 }
+
 function getCartByUserId($userId)
 {
   $id = (int) $userId;
@@ -18,40 +18,44 @@ function getCartByUserId($userId)
   return dbQueryOne($query);
 }
 
-function addProductToCart($cartId, $productId)
+function setCartProductAmount($cartId, $productId, $productAmount)
 {
-  $cart = getCartById($cartId);
-  $cartProducts = json_decode($cart["products"], true);
-  $product = getProductById($productId);
-  $cartProducts[$productId]["id"] = $product["id"];
-  $cartProducts[$productId]["product_name"] = $product["product_name"];
-  $cartProducts[$productId]["amount"] = ((int) $cartProducts[$productId]["amount"]) + 1;
-  $cartProducts[$productId]["cost"] = $product["cost"];
-  $cartProducts[$productId]["totalCost"] = $cartProducts[$productId]["amount"] * $product["cost"];
-  $cartProductsJSON = json_encode($cartProducts, JSON_UNESCAPED_UNICODE);
-  $query = "UPDATE `cart` SET `products` = '{$cartProductsJSON}'  WHERE `id` = {$cartId}";
+  $id = (int) $cartId;
+  $product = (int) $productId;
+  $amount = (int) $productAmount;
+  $query = "UPDATE `cart_product` SET `product_amount` = '{$amount}'  WHERE `cart_id` = {$id} AND `product_id` = {$product} ";
   return dbExecute($query);
 }
 
-function removeProductFromCart($cartId, $productId)
+
+function deleteCartProduct($cartId, $productId)
 {
-  $cart = getCartById($cartId);
-  $cartProducts = json_decode($cart["products"], true);
-  $product = getProductById($productId);
-  $cartProducts[$productId]["amount"] = ((int) $cartProducts[$productId]["amount"]) - 1;
-  if ($cartProducts[$productId]["amount"] <= 0) {
-    unset($cartProducts[$productId]);
-  } else {
-    $cartProducts[$productId]["id"] = $product["id"];
-    $cartProducts[$productId]["product_name"] = $product["product_name"];
-    $cartProducts[$productId]["cost"] = $product["cost"];
-    $cartProducts[$productId]["totalCost"] = $cartProducts[$productId]["amount"] * $product["cost"];
-  }
-  $cartProductsJSON = json_encode($cartProducts, JSON_UNESCAPED_UNICODE);
-  $query = "UPDATE `cart` SET `products` = '{$cartProductsJSON}'  WHERE `id` = {$cartId}";
+  $id = (int) $cartId;
+  $product = (int) $productId;
+  $query = "DELETE FROM `cart_product` WHERE `cart_id` = {$id} AND `product_id` = {$product}";
   return dbExecute($query);
 }
 
+function deleteAllCartProducts($cartId)
+{
+  $id = (int) $cartId;
+  $query = "DELETE FROM `cart_product` WHERE `cart_id` = {$id}";
+  return dbExecute($query);
+}
+
+function deleteCart($cartId)
+{
+  $id = (int) $cartId;
+  $query = "DELETE FROM  `cart` WHERE `id` = {$id}";
+  return dbExecute($query);
+}
+
+function getCartProducts($cartId)
+{
+  $id = (int) $cartId;
+  $query = "SELECT * FROM `cart_product` WHERE `cart_id` = {$id}";
+  return dbQueryAll($query);
+}
 
 function getUserCart($userId)
 {
@@ -65,7 +69,17 @@ function getUserCart($userId)
 
 function createCart($userId)
 {
-  $uid = (int) $userId;
-  $query = "INSERT INTO `cart`(`user_id`, `products`) VALUES ('{$uid}', '[]')";
+  $id = (int) $userId;
+  $query = "INSERT INTO `cart`(`user_id`) VALUES ('{$id}')";
+  return dbExecute($query);
+}
+
+function createCartProduct($cartId, $productId, $productAmount)
+{
+  $cart = (int) $cartId;
+  $product = (int) $productId;
+  $amount = (int) $productAmount;
+  $query = "INSERT INTO `cart_product`(`cart_id`, `product_id`, `product_amount`) 
+            VALUES({$cart}, {$product}, {$amount})";
   return dbExecute($query);
 }
